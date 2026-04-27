@@ -1,16 +1,18 @@
 <?php
-/** @var string $title */
+
+/** @var string $page_title */
 /** @var bool   $is_auth */
 /** @var string $user_name */
-/** @var string $content */
+/** @var string $main_content */
 /** @var array  $categories */
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
 
 <head>
     <meta charset="UTF-8">
-    <title><?= $title ?></title>
+    <title><?= $page_title ?></title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
@@ -55,7 +57,7 @@
         </header>
 
         <main class="container">
-            <?= $content ?>
+            <?= $main_content ?>
         </main>
     </div>
 
