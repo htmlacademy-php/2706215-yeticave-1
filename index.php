@@ -9,23 +9,17 @@ $is_auth = (bool) rand(0, 1);
 $user_name = 'Александр';
 $page_title = 'Главная';
 
-$main_content = include_template(
-    'main.php',
-    [
-        'categories' => $categories,
-        'lots' => $lots,
-    ]
-);
+$main_content = include_template('main.php', [
+    'categories' => $categories,
+    'lots' => $lots,
+]);
 
-$page_content = include_template(
-    'layout.php',
-    [
-        'page_title' => $page_title,
-        'is_auth' => $is_auth,
-        'user_name' => $user_name,
-        'categories' => $categories,
-        'main_content' => $main_content,
-    ]
-);
+$page_content = include_template('layout.php', [
+    'page_title' => $page_title,
+    'is_auth' => $is_auth,
+    'user_name' => $user_name,
+    'categories' => $categories,
+    'main_content' => $main_content,
+]);
 
 echo $page_content;
