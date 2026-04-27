@@ -34,25 +34,25 @@ function esc(string $value): string
 /**
  * Returns the time remaining until the specified date.
  *
+ * Returns zero time if the date is invalid or already expired.
+ *
  * @param string $date Expiration date in Y-m-d format.
  *
- * @return array Remaining hours and minutes.
+ * @return array{0: int, 1: int} Remaining hours and minutes.
  */
 function get_dt_range(string $date): array
 {
     $timestamp = strtotime($date);
 
-    if ($timestamp === false) {
-        return [0, 0];
-    }
+    if ($timestamp !== false) {
+        $seconds_left = $timestamp - time();
 
-    $seconds_left = $timestamp - time();
+        if ($seconds_left > 0) {
+            $hours = (int) ($seconds_left / SECONDS_PER_HOUR);
+            $minutes = (int) (($seconds_left % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
 
-    if ($seconds_left > 0) {
-        $hours = (int) ($seconds_left / SECONDS_PER_HOUR);
-        $minutes = (int) (($seconds_left % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
-
-        return [$hours, $minutes];
+            return [$hours, $minutes];
+        }
     }
 
     return [0, 0];
