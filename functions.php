@@ -11,12 +11,9 @@ declare(strict_types=1);
  */
 function format_price(int $price): string
 {
-    // ceil() is kept to follow the specification, although it has no practical effect here because $price is already typed as int
-    $price = ceil($price);
+    $formatted_price = number_format($price, 0, ',', ' ');
 
-    $formatted_price = $price < 1000 ? $price : number_format($price, 0, ',', ' ');
-
-    return $formatted_price . ' <b class="rub">р</b>';
+    return $formatted_price . ' ₽';
 }
 
 /**
