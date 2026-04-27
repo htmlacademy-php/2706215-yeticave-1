@@ -49,8 +49,8 @@ function get_dt_range(string $date): array
     $seconds_left = $timestamp - time();
 
     if ($seconds_left > 0) {
-        $hours = (int) ($seconds_left / 3600);
-        $minutes = (int) (($seconds_left % 3600) / 60);
+        $hours = (int) ($seconds_left / SECONDS_PER_HOUR);
+        $minutes = (int) (($seconds_left % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
 
         return [$hours, $minutes];
     }
