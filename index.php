@@ -2,17 +2,11 @@
 
 declare(strict_types=1);
 
-date_default_timezone_set('Europe/Moscow');
-
-require_once __DIR__ . '/const.php';
+require_once __DIR__ . '/init.php';
 require_once __DIR__ . '/data.php';
-require_once __DIR__ . '/helpers.php';
-require_once __DIR__ . '/functions.php';
 
 $is_auth = (bool) rand(0, 1);
-
 $user_name = 'Александр';
-
 $page_title = 'Главная';
 
 $main_content = include_template(
