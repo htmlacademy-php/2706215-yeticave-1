@@ -60,14 +60,11 @@ function get_time_left(string $date): array
 /**
  * Formats remaining time as HH:MM.
  *
- * @param array{0: int, 1: int} $time_left Remaining hours and minutes.
+ * @param array{0: int, 1: int} $time_left Remaining time as [hours, minutes].
  *
  * @return string Formatted remaining time.
  */
 function format_time_left(array $time_left): string
 {
-    $hours = str_pad((string) $time_left[0], 2, '0', STR_PAD_LEFT);
-    $minutes = str_pad((string) $time_left[1], 2, '0', STR_PAD_LEFT);
-
-    return $hours . ':' . $minutes;
+    return sprintf('%02d:%02d', $time_left[0], $time_left[1]);
 }
