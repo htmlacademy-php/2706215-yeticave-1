@@ -14,9 +14,9 @@ function format_price(int $price): string
     // ceil() is kept to follow the specification, although it has no practical effect here because $price is already typed as int
     $price = ceil($price);
 
-    $formattedPrice = $price < 1000 ? $price : number_format($price, 0, ',', ' ');
+    $formatted_price = $price < 1000 ? $price : number_format($price, 0, ',', ' ');
 
-    return $formattedPrice . ' <b class="rub">р</b>';
+    return $formatted_price . ' <b class="rub">р</b>';
 }
 
 /**
@@ -46,11 +46,11 @@ function get_dt_range(string $date): array
         return [0, 0];
     }
 
-    $secondsLeft = $timestamp - time();
+    $seconds_left = $timestamp - time();
 
-    if ($secondsLeft > 0) {
-        $hours = (int) ($secondsLeft / 3600);
-        $minutes = (int) (($secondsLeft % 3600) / 60);
+    if ($seconds_left > 0) {
+        $hours = (int) ($seconds_left / 3600);
+        $minutes = (int) (($seconds_left % 3600) / 60);
 
         return [$hours, $minutes];
     }

@@ -1,7 +1,7 @@
 <?php
 /** @var string $title */
-/** @var bool   $isAuth */
-/** @var string $userName */
+/** @var bool   $is_auth */
+/** @var string $user_name */
 /** @var string $content */
 /** @var array  $categories */
 ?>
@@ -33,9 +33,9 @@
 
                 <nav class="user-menu">
 
-                    <?php if ($isAuth): ?>
+                    <?php if ($is_auth): ?>
                         <div class="user-menu__logged">
-                            <p><?= esc($userName) ?></p>
+                            <p><?= esc($user_name) ?></p>
                             <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
                             <a class="user-menu__logout" href="#">Выход</a>
                         </div>
