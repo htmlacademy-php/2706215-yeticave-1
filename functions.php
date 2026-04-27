@@ -29,30 +29,32 @@ function esc(string $value): string
 }
 
 /**
- * Returns the time remaining until the specified date.
+ * Returns the time left until the end of the given date.
  *
- * Returns zero time if the date is invalid or already expired.
+ * The date is treated as a calendar date in the application timezone.
+ * The lot expires at 23:59:59 on this date.
  *
- * @param string $date Expiration date in Y-m-d format.
+ * Invalid or expired dates return [0, 0].
  *
- * @return array{0: int, 1: int} Remaining hours and minutes.
+ * @param string $date Expiration date in YYYY-MM-DD format.
+ *
+ * @return array{0: int, 1: int} Time left as [hours, minutes].
  */
-function get_dt_range(string $date): array
+function get_time_left(string $date): array
 {
-    $timestamp = strtotime($date);
+    $hours_left = 0;
+    $minutes_left = 0;
 
-    if ($timestamp !== false) {
-        $seconds_left = $timestamp - time();
+    if (is_date_valid($date)) {
+        $expiration_date = DateTimeImmutable::createFromFormat('!Y-m-d H:i:s', "{$date} 23:59:59");
+        $now = new DateTimeImmutable();
+        $seconds_left = max(0, $expiration_date->getTimestamp() - $now->getTimestamp());
 
-        if ($seconds_left > 0) {
-            $hours = (int) ($seconds_left / SECONDS_PER_HOUR);
-            $minutes = (int) (($seconds_left % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE);
-
-            return [$hours, $minutes];
-        }
+        $hours_left = intdiv($seconds_left, SECONDS_PER_HOUR);
+        $minutes_left = intdiv($seconds_left % SECONDS_PER_HOUR, SECONDS_PER_MINUTE);
     }
 
-    return [0, 0];
+    return [$hours_left, $minutes_left];
 }
 
 /**
