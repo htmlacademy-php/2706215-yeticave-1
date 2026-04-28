@@ -1,6 +1,8 @@
 <?php
+
 /** @var array $categories */
 /** @var array $lots */
+
 ?>
 <section class="promo">
     <h2 class="promo__title">Нужен стафф для катки?</h2>
@@ -24,20 +26,28 @@
         <?php foreach ($lots as $lot): ?>
             <li class="lots__item lot">
                 <div class="lot__image">
-                    <img src="<?= esc($lot['image_url'] ?? '') ?>" width="350" height="260" alt="<?= esc($lot['title'] ?? '') ?>">
+                    <img
+                        src="<?= esc($lot['image_url'] ?? '') ?>"
+                        width="350"
+                        height="260"
+                        alt="<?= esc($lot['title'] ?? '') ?>"
+                    >
                 </div>
+
                 <div class="lot__info">
                     <span class="lot__category"><?= esc($lot['category'] ?? '') ?></span>
-                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?= esc($lot['title'] ?? '') ?></a></h3>
+                    <h3 class="lot__title">
+                        <a class="text-link" href="pages/lot.html"><?= esc($lot['title'] ?? '') ?></a>
+                    </h3>
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount"><?= format_price($lot['price'] ?? 0) ?></span>
                             <span class="lot__cost">цена</span>
                         </div>
 
-                        <?php $timeLeft = get_dt_range($lot['expire_date'] ?? ''); ?>
-                        <div class="lot__timer timer <?= $timeLeft[0] > 0 ? '' : 'timer--finishing'; ?>">
-                            <?= str_pad((string) $timeLeft[0], 2, '0', STR_PAD_LEFT); ?>:<?= str_pad((string) $timeLeft[1], 2, '0', STR_PAD_LEFT); ?>
+                        <?php $time_left = get_time_left($lot['expire_date'] ?? ''); ?>
+                        <div class="lot__timer timer<?= $time_left[0] === 0 ? ' timer--finishing' : '' ?>">
+                            <?= format_time_left($time_left) ?>
                         </div>
                     </div>
                 </div>

@@ -1,16 +1,18 @@
 <?php
-/** @var string $title */
-/** @var bool   $isAuth */
-/** @var string $userName */
-/** @var string $content */
+
+/** @var string $page_title */
+/** @var bool   $is_auth */
+/** @var string $user_name */
+/** @var string $main_content */
 /** @var array  $categories */
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
 
 <head>
     <meta charset="UTF-8">
-    <title><?= $title ?></title>
+    <title><?= $page_title ?></title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
@@ -33,9 +35,9 @@
 
                 <nav class="user-menu">
 
-                    <?php if ($isAuth): ?>
+                    <?php if ($is_auth): ?>
                         <div class="user-menu__logged">
-                            <p><?= esc($userName) ?></p>
+                            <p><?= esc($user_name) ?></p>
                             <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
                             <a class="user-menu__logout" href="#">Выход</a>
                         </div>
@@ -55,7 +57,7 @@
         </header>
 
         <main class="container">
-            <?= $content ?>
+            <?= $main_content ?>
         </main>
     </div>
 

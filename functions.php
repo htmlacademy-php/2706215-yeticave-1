@@ -11,12 +11,9 @@ declare(strict_types=1);
  */
 function format_price(int $price): string
 {
-    // ceil() is kept to follow the specification, although it has no practical effect here because $price is already typed as int
-    $price = ceil($price);
+    $formatted_price = number_format($price, 0, ',', ' ');
 
-    $formattedPrice = $price < 1000 ? $price : number_format($price, 0, ',', ' ');
-
-    return $formattedPrice . ' <b class="rub">р</b>';
+    return $formatted_price . ' ₽';
 }
 
 /**
@@ -32,28 +29,42 @@ function esc(string $value): string
 }
 
 /**
- * Returns the time remaining until the specified date.
+ * Returns the time left until the end of the given date.
  *
- * @param string $date Expiration date in Y-m-d format.
+ * The date is treated as a calendar date in the application timezone.
+ * The lot expires at 23:59:59 on this date.
  *
- * @return array Remaining hours and minutes.
+ * Invalid or expired dates return [0, 0].
+ *
+ * @param string $date Expiration date in YYYY-MM-DD format.
+ *
+ * @return array{0: int, 1: int} Time left as [hours, minutes].
  */
-function get_dt_range(string $date): array
+function get_time_left(string $date): array
 {
-    $timestamp = strtotime($date);
+    $hours_left = 0;
+    $minutes_left = 0;
 
-    if ($timestamp === false) {
-        return [0, 0];
+    if (is_date_valid($date)) {
+        $expiration_date = DateTimeImmutable::createFromFormat('!Y-m-d H:i:s', "{$date} 23:59:59");
+        $now = new DateTimeImmutable();
+        $seconds_left = max(0, $expiration_date->getTimestamp() - $now->getTimestamp());
+
+        $hours_left = intdiv($seconds_left, SECONDS_PER_HOUR);
+        $minutes_left = intdiv($seconds_left % SECONDS_PER_HOUR, SECONDS_PER_MINUTE);
     }
 
-    $secondsLeft = $timestamp - time();
+    return [$hours_left, $minutes_left];
+}
 
-    if ($secondsLeft > 0) {
-        $hours = (int) ($secondsLeft / 3600);
-        $minutes = (int) (($secondsLeft % 3600) / 60);
-
-        return [$hours, $minutes];
-    }
-
-    return [0, 0];
+/**
+ * Formats remaining time as HH:MM.
+ *
+ * @param array{0: int, 1: int} $time_left Remaining time as [hours, minutes].
+ *
+ * @return string Formatted remaining time.
+ */
+function format_time_left(array $time_left): string
+{
+    return sprintf('%02d:%02d', $time_left[0], $time_left[1]);
 }
