@@ -7,7 +7,7 @@ SELECT
   lots.`title`,
   lots.`start_price`,
   lots.`image_url`,
-  COALESCE(lot_bets.`max_amount`, lots.`start_price`) AS `price`,
+  IFNULL(lot_bets.`max_amount`, lots.`start_price`) AS `price`,
   categories.`name` AS `category_name`
 FROM `lots`
 JOIN `categories` ON lots.`category_id` = categories.`id`
@@ -26,9 +26,9 @@ SELECT
   lots.`description`,
   lots.`image_url`,
   lots.`start_price`,
-  COALESCE(lot_bets.`max_amount`, lots.`start_price`) AS `price`,
+  IFNULL(lot_bets.`max_amount`, lots.`start_price`) AS `price`,
   lots.`bet_step`,
-  COALESCE(lot_bets.`max_amount`, lots.`start_price`) + lots.`bet_step` AS `min_bet`,
+  IFNULL(lot_bets.`max_amount`, lots.`start_price`) + lots.`bet_step` AS `min_bet`,
   lots.`expire_date`,
   categories.`name` AS `category_name`
 FROM `lots`
