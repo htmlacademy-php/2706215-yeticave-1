@@ -107,8 +107,7 @@ CREATE TABLE IF NOT EXISTS `bets` (
 
 -- The foreign key only checks that the winning bet exists.
 -- The application checks that the winning bet belongs to the selected lot.
+-- A winning bet cannot be deleted or have its id changed while a lot references it.
 ALTER TABLE `lots`
   ADD CONSTRAINT `fk_lots_winner_bet`
-  FOREIGN KEY (`winner_bet_id`) REFERENCES `bets` (`id`)
-  ON DELETE SET NULL
-  ON UPDATE CASCADE;
+  FOREIGN KEY (`winner_bet_id`) REFERENCES `bets` (`id`);
