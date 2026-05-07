@@ -3,11 +3,13 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/init.php';
-require_once __DIR__ . '/data.php';
 
 $is_auth = (bool) rand(0, 1);
 $user_name = 'Александр';
 $page_title = 'Главная';
+
+$categories = get_all_categories($db_connection);
+$lots = get_recent_lots($db_connection, LIMIT_RECENT_LOTS);
 
 $main_content = include_template('main.php', [
     'categories' => $categories,
