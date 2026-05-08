@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+/** @var mysqli $db_connection */
+
 require_once __DIR__ . '/init.php';
 
 $is_auth = (bool) rand(0, 1);
@@ -9,7 +11,7 @@ $user_name = 'Александр';
 $page_title = 'Главная';
 
 $categories = get_all_categories($db_connection);
-$lots = get_recent_lots($db_connection, LIMIT_RECENT_LOTS);
+$lots = get_recent_lots($db_connection);
 
 $main_content = include_template('main.php', [
     'categories' => $categories,

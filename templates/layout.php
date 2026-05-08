@@ -20,22 +20,22 @@
 <body>
     <div class="page-wrapper">
 
-        <?php echo include_template('header.php', [
+        <?= include_template('header.php', [
             'is_auth' => $is_auth,
             'user_name' => $user_name,
-        ]); ?>
+        ]) ?>
 
         <main class="container">
             <?= $main_content ?>
         </main>
     </div>
 
-    <?php echo include_template('footer.php', [
+    <?= include_template('footer.php', [
         'categories' => $categories,
-    ]); ?>
+    ]) ?>
 
-    <script src="flatpickr.js"></script>
-    <script src="script.js"></script>
+    <script src="js/flatpickr.js"></script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>
