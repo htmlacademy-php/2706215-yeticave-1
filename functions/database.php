@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+// TODO: Replace exit() calls with exceptions and show errors on the error.php page.
+
 /**
  * Creates a MySQL database connection and sets the connection charset.
  *
@@ -18,7 +20,6 @@ declare(strict_types=1);
 function db_connect(array $config): mysqli
 {
     if (!isset($config['host'], $config['user'], $config['password'], $config['database'], $config['port'])) {
-        // TODO: Replace exit() with exceptions and show the error on the error.php page.
         exit('Ошибка конфигурации базы данных');
     }
 
@@ -31,12 +32,10 @@ function db_connect(array $config): mysqli
     );
 
     if ($connection === false) {
-        // TODO: Replace exit() with exceptions and show the error on the error.php page.
         exit('Ошибка подключения: ' . mysqli_connect_error());
     }
 
     if (!mysqli_set_charset($connection, 'utf8mb4')) {
-        // TODO: Replace exit() with exceptions and show the error on the error.php page.
         exit('Ошибка установки кодировки: ' . mysqli_error($connection));
     }
 
@@ -51,7 +50,6 @@ function get_query_result(mysqli $connection, string $sql): mysqli_result
     $result = mysqli_query($connection, $sql);
 
     if ($result === false) {
-        // TODO: Replace exit() with exceptions and show the error on the error.php page.
         exit('Ошибка SQL-запроса: ' . mysqli_error($connection));
     }
 
@@ -66,21 +64,18 @@ function get_stmt_result(mysqli $connection, string $sql, string $types, array $
     $stmt = mysqli_prepare($connection, $sql);
 
     if ($stmt === false) {
-        // TODO: Replace exit() with exceptions and show the error on the error.php page.
         exit('Ошибка подготовки SQL-запроса: ' . mysqli_error($connection));
     }
 
     mysqli_stmt_bind_param($stmt, $types, ...$params);
 
     if (!mysqli_stmt_execute($stmt)) {
-        // TODO: Replace exit() with exceptions and show the error on the error.php page.
         exit('Ошибка выполнения SQL-запроса: ' . mysqli_stmt_error($stmt));
     }
 
     $result = mysqli_stmt_get_result($stmt);
 
     if ($result === false) {
-        // TODO: Replace exit() with exceptions and show the error on the error.php page.
         exit('Ошибка SQL-запроса: ' . mysqli_stmt_error($stmt));
     }
 
