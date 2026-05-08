@@ -44,6 +44,50 @@ function db_connect(array $config): mysqli
 }
 
 /**
+ * Executes a regular SQL query and returns the result.
+ */
+function get_query_result(mysqli $connection, string $sql): mysqli_result
+{
+    $result = mysqli_query($connection, $sql);
+
+    if ($result === false) {
+        // TODO: Replace exit() with exceptions and show the error on the error.php page.
+        exit('Ошибка SQL-запроса: ' . mysqli_error($connection));
+    }
+
+    return $result;
+}
+
+/**
+ * Executes a prepared SQL query and returns the result.
+ */
+function get_stmt_result(mysqli $connection, string $sql, string $types, array $params): mysqli_result
+{
+    $stmt = mysqli_prepare($connection, $sql);
+
+    if ($stmt === false) {
+        // TODO: Replace exit() with exceptions and show the error on the error.php page.
+        exit('Ошибка подготовки SQL-запроса: ' . mysqli_error($connection));
+    }
+
+    mysqli_stmt_bind_param($stmt, $types, ...$params);
+
+    if (!mysqli_stmt_execute($stmt)) {
+        // TODO: Replace exit() with exceptions and show the error on the error.php page.
+        exit('Ошибка выполнения SQL-запроса: ' . mysqli_stmt_error($stmt));
+    }
+
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ($result === false) {
+        // TODO: Replace exit() with exceptions and show the error on the error.php page.
+        exit('Ошибка SQL-запроса: ' . mysqli_stmt_error($stmt));
+    }
+
+    return $result;
+}
+
+/**
  * Returns all lot categories.
  *
  * @param mysqli $connection MySQL database connection.
@@ -58,12 +102,7 @@ function get_all_categories(mysqli $connection): array
 {
     $sql = 'SELECT `id`, `name`, `slug` FROM `categories`';
 
-    $result = mysqli_query($connection, $sql);
-
-    if ($result === false) {
-        // TODO: Replace exit() with exceptions and show the error on the error.php page.
-        exit('Ошибка SQL-запроса: ' . mysqli_error($connection));
-    }
+    $result = get_query_result($connection, $sql);
 
     $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
@@ -111,21 +150,10 @@ LEFT JOIN (
 ) AS lot_bets ON lot_bets.`lot_id` = lots.`id`
 WHERE lots.`expire_date` > CURRENT_DATE
 ORDER BY lots.`created_at` DESC
-LIMIT ?;
+LIMIT ?
 EOT;
 
-    // TODO: Move prepared SELECT query execution to a separate helper function with full error handling.
-    $stmt = mysqli_prepare($connection, $sql);
-
-    mysqli_stmt_bind_param($stmt, 'i', $limit);
-    mysqli_stmt_execute($stmt);
-
-    $result = mysqli_stmt_get_result($stmt);
-
-    if ($result === false) {
-        // TODO: Replace exit() with exceptions and show the error on the error.php page.
-        exit('Ошибка SQL-запроса: ' . mysqli_error($connection));
-    }
+    $result = get_stmt_result($connection, $sql, 'i', [$limit]);
 
     $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
