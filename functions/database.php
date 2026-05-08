@@ -2,9 +2,23 @@
 
 declare(strict_types=1);
 
+/**
+ * Creates a MySQL database connection and sets the connection charset.
+ *
+ * @param array{
+ *     host: string,
+ *     user: string,
+ *     password: string,
+ *     database: string,
+ *     port: int
+ * } $config Database connection settings.
+ *
+ * @return mysqli MySQL database connection.
+ */
 function db_connect(array $config): mysqli
 {
     if (!isset($config['host'], $config['user'], $config['password'], $config['database'], $config['port'])) {
+        // TODO: Replace exit() with exceptions and show the error on the error.php page.
         exit('Ошибка конфигурации базы данных');
     }
 
@@ -17,16 +31,29 @@ function db_connect(array $config): mysqli
     );
 
     if ($connection === false) {
+        // TODO: Replace exit() with exceptions and show the error on the error.php page.
         exit('Ошибка подключения: ' . mysqli_connect_error());
     }
 
     if (!mysqli_set_charset($connection, 'utf8mb4')) {
+        // TODO: Replace exit() with exceptions and show the error on the error.php page.
         exit('Ошибка установки кодировки: ' . mysqli_error($connection));
     }
 
     return $connection;
 }
 
+/**
+ * Returns all lot categories.
+ *
+ * @param mysqli $connection MySQL database connection.
+ *
+ * @return array<int, array{
+ *     id: string,
+ *     name: string,
+ *     slug: string
+ * }>
+ */
 function get_all_categories(mysqli $connection): array
 {
     $sql = 'SELECT `id`, `name`, `slug` FROM `categories`';
@@ -34,6 +61,7 @@ function get_all_categories(mysqli $connection): array
     $result = mysqli_query($connection, $sql);
 
     if ($result === false) {
+        // TODO: Replace exit() with exceptions and show the error on the error.php page.
         exit('Ошибка SQL-запроса: ' . mysqli_error($connection));
     }
 
@@ -42,6 +70,25 @@ function get_all_categories(mysqli $connection): array
     return $rows;
 }
 
+/**
+ * Returns recent active lots with their current price and category name.
+ *
+ * The current price is the highest bet amount or the start price if there are no bets.
+ * The expiration date is returned in YYYY-MM-DD format.
+ *
+ * @param mysqli $connection MySQL database connection.
+ * @param int $limit Maximum number of lots to return.
+ *
+ * @return array<int, array{
+ *     id: string,
+ *     title: string,
+ *     start_price: string,
+ *     image_url: string,
+ *     price: string,
+ *     expire_date: string,
+ *     category_name: string
+ * }>
+ */
 function get_recent_lots(mysqli $connection, int $limit = LIMIT_RECENT_LOTS): array
 {
     $limit = max(1, $limit);
@@ -53,7 +100,8 @@ SELECT
   lots.`start_price`,
   lots.`image_url`,
   IFNULL(lot_bets.`max_amount`, lots.`start_price`) AS `price`,
-  categories.`name` AS `category`
+  DATE_FORMAT(lots.`expire_date`, '%Y-%m-%d') AS `expire_date`,
+  categories.`name` AS `category_name`
 FROM `lots`
 JOIN `categories` ON lots.`category_id` = categories.`id`
 LEFT JOIN (
@@ -69,6 +117,7 @@ EOT;
     $result = mysqli_query($connection, $sql);
 
     if ($result === false) {
+        // TODO: Replace exit() with exceptions and show the error on the error.php page.
         exit('Ошибка SQL-запроса: ' . mysqli_error($connection));
     }
 

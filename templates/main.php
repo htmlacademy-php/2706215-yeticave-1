@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="lot__info">
-                    <span class="lot__category"><?= esc($lot['category'] ?? '') ?></span>
+                    <span class="lot__category"><?= esc($lot['category_name'] ?? '') ?></span>
                     <h3 class="lot__title">
                         <a class="text-link" href="pages/lot.html"><?= esc($lot['title'] ?? '') ?></a>
                     </h3>
