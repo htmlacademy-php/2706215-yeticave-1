@@ -20,7 +20,7 @@
 <body>
     <div class="page-wrapper">
 
-        <?php include_template('header', [
+        <?php echo include_template('header.php', [
             'is_auth' => $is_auth,
             'user_name' => $user_name,
         ]); ?>
@@ -30,7 +30,7 @@
         </main>
     </div>
 
-    <?php include_template('footer', [
+    <?php echo include_template('footer.php', [
         'categories' => $categories,
     ]); ?>
 

@@ -16,15 +16,13 @@ CREATE TABLE IF NOT EXISTS `users` (
     `email`         VARCHAR(255) NOT NULL,
     `name`          VARCHAR(128) NOT NULL,
     `password_hash` VARCHAR(255) NOT NULL,
-    `contact_info`  TEXT         NULL     DEFAULT NULL,
+    `contact_info`  TEXT         NULL,
 
     `created_at`    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at`    TIMESTAMP    NULL     DEFAULT NULL,
+    `updated_at`    TIMESTAMP    NULL,
 
     UNIQUE KEY `uq_users_email` (`email`)
-) ENGINE=InnoDB
-  DEFAULT CHARSET=utf8mb4
-  COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 
 -- Lot categories
 CREATE TABLE IF NOT EXISTS `categories` (
@@ -34,9 +32,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
 
     UNIQUE KEY `uq_categories_name` (`name`),
     UNIQUE KEY `uq_categories_slug` (`slug`)
-) ENGINE=InnoDB
-  DEFAULT CHARSET=utf8mb4
-  COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 
 -- Lots
 -- 1. start_price, bet_step - Prices are stored as integer values
@@ -49,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `lots` (
     `id`            INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `author_id`     INT UNSIGNED NOT NULL,
     `category_id`   INT UNSIGNED NOT NULL,
-    `winner_bet_id` INT UNSIGNED NULL     DEFAULT NULL,
+    `winner_bet_id` INT UNSIGNED NULL,
 
     `title`         VARCHAR(255) NOT NULL,
     `description`   TEXT         NOT NULL,
@@ -59,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `lots` (
     `expire_date`   DATE         NOT NULL,
 
     `created_at`    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at`    TIMESTAMP    NULL     DEFAULT NULL,
+    `updated_at`    TIMESTAMP    NULL,
 
     -- Indexes for filtering lots
     KEY `idx_lots_author_id`     (`author_id`),
@@ -73,9 +69,7 @@ CREATE TABLE IF NOT EXISTS `lots` (
 
     CONSTRAINT `fk_lots_author`   FOREIGN KEY (`author_id`)   REFERENCES `users`      (`id`),
     CONSTRAINT `fk_lots_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
-) ENGINE=InnoDB
-  DEFAULT CHARSET=utf8mb4
-  COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 
 -- User bets for lots
 -- 1. amount                   - Bet amount is stored as an integer value
@@ -93,14 +87,11 @@ CREATE TABLE IF NOT EXISTS `bets` (
 
     CONSTRAINT `fk_bets_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
     CONSTRAINT `fk_bets_lot`  FOREIGN KEY (`lot_id`)  REFERENCES `lots`  (`id`)
-) ENGINE=InnoDB
-  DEFAULT CHARSET=utf8mb4
-  COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 
 -- The foreign key only checks that the winning bet exists.
 -- The application checks that the winning bet belongs to the selected lot.
+-- A winning bet cannot be deleted or have its id changed while a lot references it.
 ALTER TABLE `lots`
     ADD CONSTRAINT `fk_lots_winner_bet`
-        FOREIGN KEY (`winner_bet_id`) REFERENCES `bets` (`id`)
-            ON DELETE SET NULL
-            ON UPDATE CASCADE;
+        FOREIGN KEY (`winner_bet_id`) REFERENCES `bets` (`id`);
