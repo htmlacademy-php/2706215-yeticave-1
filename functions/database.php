@@ -111,10 +111,16 @@ LEFT JOIN (
 ) AS lot_bets ON lot_bets.`lot_id` = lots.`id`
 WHERE lots.`expire_date` > CURRENT_DATE
 ORDER BY lots.`created_at` DESC
-LIMIT $limit;
+LIMIT ?;
 EOT;
 
-    $result = mysqli_query($connection, $sql);
+    // TODO: Move prepared SELECT query execution to a separate helper function with full error handling.
+    $stmt = mysqli_prepare($connection, $sql);
+
+    mysqli_stmt_bind_param($stmt, 'i', $limit);
+    mysqli_stmt_execute($stmt);
+
+    $result = mysqli_stmt_get_result($stmt);
 
     if ($result === false) {
         // TODO: Replace exit() with exceptions and show the error on the error.php page.
