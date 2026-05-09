@@ -3,6 +3,7 @@
 /** @var string $page_title */
 /** @var bool   $is_auth */
 /** @var string $user_name */
+/** @var string $main_class */
 /** @var string $main_content */
 /** @var array  $categories */
 
@@ -12,7 +13,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title><?= $page_title ?></title>
+    <title><?= esc($page_title) ?></title>
     <link href="../css/normalize.min.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet">
 </head>
@@ -25,7 +26,7 @@
             'user_name' => $user_name,
         ]) ?>
 
-        <main class="container">
+        <main class="<?= $main_class ?>">
             <?= $main_content ?>
         </main>
     </div>

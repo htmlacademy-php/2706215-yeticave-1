@@ -156,3 +156,21 @@ function include_template(string $name, array $data = []): string
 
     return $result;
 }
+
+/**
+ * Checks whether the current page is the home page.
+ */
+function is_home_page(): bool
+{
+    $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+    return $url === '/' || $url === '/index.php';
+}
+
+/**
+ * Returns the home page URL.
+ */
+function get_home_url(): string
+{
+    return '/';
+}

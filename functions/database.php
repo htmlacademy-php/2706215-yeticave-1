@@ -153,3 +153,32 @@ function get_recent_lots(mysqli $connection, int $limit = LIMIT_RECENT_LOTS): ar
 
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
+
+function get_lot_by_id(mysqli $connection, int $id): ?array
+{
+    $sql = <<<SQL
+        SELECT
+            lots.`id`,
+            lots.`title`,
+            lots.`description`,
+            lots.`image_url`,
+            lots.`start_price`,
+            IFNULL(lot_bets.`max_amount`, lots.`start_price`) AS `price`,
+            lots.`bet_step`,
+            IFNULL(lot_bets.`max_amount`, lots.`start_price`) + lots.`bet_step` AS `min_bet`,
+            DATE_FORMAT(lots.`expire_date`, '%Y-%m-%d') AS `expire_date`,
+            categories.`name` AS `category_name`
+        FROM `lots`
+            JOIN `categories` ON lots.`category_id` = categories.`id`
+            LEFT JOIN (
+                SELECT `lot_id`, MAX(`amount`) AS `max_amount`
+                FROM `bets`
+                GROUP BY `lot_id`
+            ) AS lot_bets ON lot_bets.`lot_id` = lots.`id`
+        WHERE lots.`id` = ?
+    SQL;
+
+    $result = get_stmt_result($connection, $sql, 'i', [$id]);
+
+    return mysqli_fetch_assoc($result);
+}
