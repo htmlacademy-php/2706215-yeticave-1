@@ -163,19 +163,16 @@ function get_lot_by_id(mysqli $connection, int $id): ?array
             lots.`description`,
             lots.`image_url`,
             lots.`start_price`,
-            IFNULL(lot_bets.`max_amount`, lots.`start_price`) AS `price`,
+            IFNULL(MAX(bets.`amount`), lots.`start_price`) AS `price`,
             lots.`bet_step`,
-            IFNULL(lot_bets.`max_amount`, lots.`start_price`) + lots.`bet_step` AS `min_bet`,
+            IFNULL(MAX(bets.`amount`), lots.`start_price`) + lots.`bet_step` AS `min_bet`,
             DATE_FORMAT(lots.`expire_date`, '%Y-%m-%d') AS `expire_date`,
             categories.`name` AS `category_name`
         FROM `lots`
             JOIN `categories` ON lots.`category_id` = categories.`id`
-            LEFT JOIN (
-                SELECT `lot_id`, MAX(`amount`) AS `max_amount`
-                FROM `bets`
-                GROUP BY `lot_id`
-            ) AS lot_bets ON lot_bets.`lot_id` = lots.`id`
+            LEFT JOIN `bets` ON bets.`lot_id` = lots.`id`
         WHERE lots.`id` = ?
+        GROUP BY lots.`id`
     SQL;
 
     $result = get_stmt_result($connection, $sql, 'i', [$id]);
