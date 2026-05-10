@@ -162,9 +162,9 @@ function include_template(string $name, array $data = []): string
  */
 function is_home_page(): bool
 {
-    $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-    return $url === '/' || $url === '/index.php';
+    return in_array($path, ['/', '/index.php'], true);
 }
 
 /**
