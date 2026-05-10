@@ -10,8 +10,8 @@
     <ul class="promo__list">
 
         <?php foreach ($categories as $category): ?>
-            <li class="promo__item promo__item--<?= esc($category['slug']) ?>">
-                <a class="promo__link" href="pages/all-lots.html"><?= esc($category['name']) ?></a>
+            <li class="promo__item promo__item--<?= esc($category['slug'] ?? '') ?>">
+                <a class="promo__link" href="pages/all-lots.html"><?= esc($category['name'] ?? '') ?></a>
             </li>
         <?php endforeach; ?>
 
@@ -37,7 +37,7 @@
                 <div class="lot__info">
                     <span class="lot__category"><?= esc($lot['category_name'] ?? '') ?></span>
                     <h3 class="lot__title">
-                        <a class="text-link" href="pages/lot.html"><?= esc($lot['title'] ?? '') ?></a>
+                        <a class="text-link" href="/lot.php?id=<?= (int) ($lot['id'] ?? 0) ?>"><?= esc($lot['title'] ?? '') ?></a>
                     </h3>
                     <div class="lot__state">
                         <div class="lot__rate">
