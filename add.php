@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-/** @var mysqli $db_connection */
-
 require_once __DIR__ . '/init.php';
+
+/** @var mysqli $db_connection */
 
 $is_auth = (bool) rand(0, 1);
 $user_name = 'Александр';
