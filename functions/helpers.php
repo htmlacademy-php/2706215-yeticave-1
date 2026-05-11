@@ -134,10 +134,24 @@ function get_noun_plural_form(int $number, string $one, string $two, string $man
 }
 
 /**
- * Подключает шаблон, передает туда данные и возвращает итоговый HTML контент
- * @param string $name Путь к файлу шаблона относительно папки templates
- * @param array $data Ассоциативный массив с данными для шаблона
- * @return string Итоговый HTML
+ * Escapes a string for safe HTML output.
+ *
+ * @param string $value Raw string value.
+ *
+ * @return string Escaped string.
+ */
+function esc(string $value): string
+{
+    return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+/**
+ * Renders a template with the given data and returns the resulting HTML.
+ *
+ * @param string $name Template file name or path relative to the templates directory.
+ * @param array $data Associative array of data that will be available in the template as variables.
+ *
+ * @return string Resulting HTML content.
  */
 function include_template(string $name, array $data = []): string
 {
@@ -158,6 +172,42 @@ function include_template(string $name, array $data = []): string
 }
 
 /**
+ * Generates HTML link tags for CSS files.
+ *
+ * @param string[] $css_files List of CSS file paths.
+ *
+ * @return string HTML link tags separated by line breaks.
+ */
+function include_css_files(array $css_files = []): string
+{
+    $links = [];
+
+    foreach ($css_files as $href) {
+        $links[] = '<link href="' . esc($href) . '" rel="stylesheet">';
+    }
+
+    return implode(PHP_EOL, $links);
+}
+
+/**
+ * Generates HTML script tags for JavaScript files.
+ *
+ * @param string[] $js_files List of JavaScript file paths.
+ *
+ * @return string HTML script tags separated by line breaks.
+ */
+function include_js_files(array $js_files = []): string
+{
+    $scripts = [];
+
+    foreach ($js_files as $src) {
+        $scripts[] = '<script src="' . esc($src) . '"></script>';
+    }
+
+    return implode(PHP_EOL, $scripts);
+}
+
+/**
  * Checks whether the current page is the home page.
  */
 function is_home_page(): bool
@@ -173,4 +223,16 @@ function is_home_page(): bool
 function get_home_url(): string
 {
     return '/';
+}
+
+/**
+ * Redirects to the given URL and stops script execution.
+ *
+ * @param string $url Redirect URL.
+ * @return never
+ */
+function redirect(string $url): never
+{
+    header('Location: ' . $url);
+    exit;
 }

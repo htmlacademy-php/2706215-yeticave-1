@@ -17,18 +17,6 @@ function format_price(int $price): string
 }
 
 /**
- * Escapes a string for safe HTML output.
- *
- * @param string $value Raw string value.
- *
- * @return string Escaped string.
- */
-function esc(string $value): string
-{
-    return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-}
-
-/**
  * Returns the time left until the end of the given date.
  *
  * The date is treated as a calendar date in the application timezone.
