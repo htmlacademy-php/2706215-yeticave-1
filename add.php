@@ -5,11 +5,9 @@ declare(strict_types=1);
 require_once __DIR__ . '/init.php';
 
 /** @var mysqli $db_connection */
-
-$is_auth = (bool) rand(0, 1);
-$user_name = 'Александр';
-
-$categories = get_all_categories($db_connection);
+/** @var bool $is_auth */
+/** @var array $user */
+/** @var array $categories */
 
 $form_data = [];
 $form_errors = [];
@@ -52,10 +50,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($form_errors)) {
         // TODO: Replace temporary author ID with current authenticated user ID.
-        $author_id = 1;
+        $author_id = $user['id'] ?? 0;
 
         $data = [
-            $author_id,
+            (int) $author_id,
             (int) $form_data['category_id'],
             $form_data['title'],
             $form_data['description'],
@@ -81,17 +79,15 @@ $main_content = include_template('add-lot.php', [
     'form_errors' => $form_errors,
 ]);
 
-$page_title = 'Добавление лота';
-
-$page_content = include_template('layout.php', [
-    'page_title' => $page_title,
+$page_content = include_template('layout/layout.php', [
+    'page_title' => 'Добавление лота',
     'is_auth' => $is_auth,
-    'user_name' => $user_name,
+    'user' => $user,
     'categories' => $categories,
     'main_content' => $main_content,
     'main_class' => '',
-    'css_files' => ['/css/flatpickr.min.css'],
-    'js_files' => ['/js/flatpickr.js', '/js/script.js'],
+    'css_files' => ['/assets/css/flatpickr.min.css'],
+    'js_files' => ['/assets/js/flatpickr.js', '/assets/js/script.js'],
 ]);
 
 echo $page_content;

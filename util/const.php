@@ -9,10 +9,18 @@ const SECONDS_PER_HOUR = SECONDS_PER_MINUTE * 60;
 // HTTP response status codes
 const HTTP_NOT_FOUND = 404;
 
+// Database connection
+const DEFAULT_MYSQL_PORT = 3306;
+
+// URLs
+const HOMEPAGE_URL = '/';
+
 // Lots
 const LIMIT_RECENT_LOTS = 6;
 
 // Uploads
+const UPLOADS_URL = '/uploads';
+const UPLOADS_DIR = BASE_PATH . UPLOADS_URL;
 const MAX_UPLOADED_FILE_SIZE = 2 * 1024 * 1024; // 2MB
 const ALLOWED_IMAGE_TYPES = [
     'jpg' => 'image/jpeg',
@@ -20,3 +28,7 @@ const ALLOWED_IMAGE_TYPES = [
     'png' => 'image/png',
     'webp' => 'image/webp',
 ];
+
+// Assets
+const ASSET_TYPE_CSS = 'css';
+const ASSET_TYPE_JS = 'js';

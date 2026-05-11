@@ -7,15 +7,11 @@
 
 ?>
 <nav class="nav">
-    <ul class="nav__list container">
 
-        <?php foreach ($categories as $category): ?>
-            <li class="nav__item">
-                <a href="/index.php"><?= esc($category['name'] ?? '') ?></a>
-            </li>
-        <?php endforeach; ?>
+    <?= include_template('_partials/_nav_list.php', [
+        'categories' => $categories,
+    ]) ?>
 
-    </ul>
 </nav>
 <form
     class="form form--add-lot container<?= !empty($form_errors) ? ' form--invalid' : '' ?>"

@@ -56,3 +56,62 @@ function format_time_left(array $time_left): string
 {
     return sprintf('%02d:%02d', $time_left[0], $time_left[1]);
 }
+
+/**
+ * Escapes a string for safe HTML output.
+ *
+ * @param string $value Raw string value.
+ *
+ * @return string Escaped string.
+ */
+function esc(string $value): string
+{
+    return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+/**
+ * Generates HTML tags for asset files.
+ *
+ * @param string[] $files List of asset file paths.
+ * @param string $type Asset type.
+ *
+ * @return string HTML tags separated by line breaks.
+ */
+function include_asset_files(array $files = [], string $type = ASSET_TYPE_CSS): string
+{
+    $tags = [];
+
+    foreach ($files as $file) {
+        $file = esc($file);
+
+        if ($type === ASSET_TYPE_CSS) {
+            $tags[] = '<link href="' . $file . '" rel="stylesheet">';
+        } elseif ($type === ASSET_TYPE_JS) {
+            $tags[] = '<script src="' . $file . '"></script>';
+        }
+    }
+
+    return implode(PHP_EOL, $tags);
+}
+
+/**
+ * Checks whether the current page is the home page.
+ */
+function is_home_page(): bool
+{
+    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+    return in_array($path, ['/', '/index.php'], true);
+}
+
+/**
+ * Redirects to the given URL and stops script execution.
+ *
+ * @param string $url Redirect URL.
+ * @return never
+ */
+function redirect(string $url): never
+{
+    header('Location: ' . $url);
+    exit;
+}
