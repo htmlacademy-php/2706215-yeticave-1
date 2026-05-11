@@ -224,3 +224,15 @@ function get_home_url(): string
 {
     return '/';
 }
+
+/**
+ * Redirects to the given URL and stops script execution.
+ *
+ * @param string $url Redirect URL.
+ * @return never
+ */
+function redirect(string $url): never
+{
+    header('Location: ' . $url);
+    exit;
+}
