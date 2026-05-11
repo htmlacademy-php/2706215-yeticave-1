@@ -14,8 +14,13 @@
 <head>
     <meta charset="UTF-8">
     <title><?= esc($page_title) ?></title>
-    <link href="../css/normalize.min.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+    <!-- common styles -->
+    <link href="/css/normalize.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- page styles -->
+    <?php if (!empty($css_files)): ?>
+        <?= include_css_files($css_files) ?>
+    <?php endif; ?>
 </head>
 
 <body>
@@ -35,8 +40,10 @@
         'categories' => $categories,
     ]) ?>
 
-    <script src="js/flatpickr.js"></script>
-    <script src="js/script.js"></script>
+    <!-- page js -->
+    <?php if (!empty($js_files)): ?>
+        <?= include_js_files($js_files) ?>
+    <?php endif; ?>
 </body>
 
 </html>
