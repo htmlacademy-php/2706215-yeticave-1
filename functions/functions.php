@@ -70,39 +70,28 @@ function esc(string $value): string
 }
 
 /**
- * Generates HTML link tags for CSS files.
+ * Generates HTML tags for asset files.
  *
- * @param string[] $css_files List of CSS file paths.
+ * @param string[] $files List of asset file paths.
+ * @param string $type Asset type.
  *
- * @return string HTML link tags separated by line breaks.
+ * @return string HTML tags separated by line breaks.
  */
-function include_css_files(array $css_files = []): string
+function include_asset_files(array $files = [], string $type = ASSET_TYPE_CSS): string
 {
-    $links = [];
+    $tags = [];
 
-    foreach ($css_files as $href) {
-        $links[] = '<link href="' . esc($href) . '" rel="stylesheet">';
+    foreach ($files as $file) {
+        $file = esc($file);
+
+        if ($type === ASSET_TYPE_CSS) {
+            $tags[] = '<link href="' . $file . '" rel="stylesheet">';
+        } elseif ($type === ASSET_TYPE_JS) {
+            $tags[] = '<script src="' . $file . '"></script>';
+        }
     }
 
-    return implode(PHP_EOL, $links);
-}
-
-/**
- * Generates HTML script tags for JavaScript files.
- *
- * @param string[] $js_files List of JavaScript file paths.
- *
- * @return string HTML script tags separated by line breaks.
- */
-function include_js_files(array $js_files = []): string
-{
-    $scripts = [];
-
-    foreach ($js_files as $src) {
-        $scripts[] = '<script src="' . esc($src) . '"></script>';
-    }
-
-    return implode(PHP_EOL, $scripts);
+    return implode(PHP_EOL, $tags);
 }
 
 /**

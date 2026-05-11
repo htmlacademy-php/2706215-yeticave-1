@@ -21,7 +21,7 @@
     <link href="/assets/css/style.css" rel="stylesheet">
     <!-- page styles -->
     <?php if (!empty($css_files)): ?>
-        <?= include_css_files($css_files) ?>
+        <?= include_asset_files($css_files, ASSET_TYPE_CSS) ?>
     <?php endif; ?>
 </head>
 
@@ -44,7 +44,7 @@
 
     <!-- page js -->
     <?php if (!empty($js_files)): ?>
-        <?= include_js_files($js_files) ?>
+        <?= include_asset_files($js_files, ASSET_TYPE_JS) ?>
     <?php endif; ?>
 </body>
 
