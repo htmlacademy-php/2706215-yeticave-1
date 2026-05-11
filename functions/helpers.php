@@ -134,6 +134,18 @@ function get_noun_plural_form(int $number, string $one, string $two, string $man
 }
 
 /**
+ * Escapes a string for safe HTML output.
+ *
+ * @param string $value Raw string value.
+ *
+ * @return string Escaped string.
+ */
+function esc(string $value): string
+{
+    return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+/**
  * Подключает шаблон, передает туда данные и возвращает итоговый HTML контент
  * @param string $name Путь к файлу шаблона относительно папки templates
  * @param array $data Ассоциативный массив с данными для шаблона
