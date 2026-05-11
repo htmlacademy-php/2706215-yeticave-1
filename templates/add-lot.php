@@ -2,6 +2,8 @@
 
 /** @var array $categories */
 /** @var array $lot */
+/** @var array $form_data */
+/** @var array $form_errors */
 
 ?>
 <nav class="nav">

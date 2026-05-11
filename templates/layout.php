@@ -6,6 +6,8 @@
 /** @var string $main_class */
 /** @var string $main_content */
 /** @var array  $categories */
+/** @var array  $css_files */
+/** @var array  $js_files */
 
 ?>
 <!DOCTYPE html>
