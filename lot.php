@@ -13,7 +13,7 @@ $lot_id = (int) ($_GET['id'] ?? 0);
 $lot = $lot_id > 0 ? get_lot_by_id($db_connection, $lot_id) : null;
 
 if ($lot === null) {
-    http_response_code(404);
+    http_response_code(HTTP_NOT_FOUND);
     exit('Страница не найдена');
 }
 
