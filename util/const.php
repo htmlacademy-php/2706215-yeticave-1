@@ -28,3 +28,7 @@ const ALLOWED_IMAGE_TYPES = [
     'png' => 'image/png',
     'webp' => 'image/webp',
 ];
+
+// Assets
+const ASSET_TYPE_CSS = 'css';
+const ASSET_TYPE_JS = 'js';

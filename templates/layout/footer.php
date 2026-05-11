@@ -1,6 +1,6 @@
 <?php
 
-/** @var array  $categories */
+/** @var array $categories */
 
 ?>
 <footer class="main-footer">

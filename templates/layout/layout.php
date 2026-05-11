@@ -1,13 +1,13 @@
 <?php
 
 /** @var string $page_title */
-/** @var bool   $is_auth */
-/** @var string $user_name */
+/** @var bool $is_auth */
+/** @var array $user */
 /** @var string $main_class */
 /** @var string $main_content */
-/** @var array  $categories */
-/** @var array  $css_files */
-/** @var array  $js_files */
+/** @var array $categories */
+/** @var array $css_files */
+/** @var array $js_files */
 
 ?>
 <!DOCTYPE html>
@@ -30,7 +30,7 @@
 
         <?= include_template('layout/header.php', [
             'is_auth' => $is_auth,
-            'user_name' => $user_name,
+            'user' => $user,
         ]) ?>
 
         <main class="<?= $main_class ?>">

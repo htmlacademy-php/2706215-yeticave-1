@@ -18,6 +18,9 @@ $db_config = require __DIR__ . '/config/db.php';
 $db_connection = db_connect($db_config);
 
 $is_auth = (bool) rand(0, 1);
-$user_name = 'Александр';
+$user = [
+    'id' => 1,
+    'name' => 'Александр',
+];
 
 $categories = get_all_categories($db_connection);
