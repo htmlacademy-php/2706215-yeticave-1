@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 // TODO: Replace exit() calls with exceptions and show errors on the error.php page.
+// TODO: Keep only low-level database helpers in this file and move category/lot query functions to separate domain files.
 
 /**
  * Creates a MySQL database connection and sets the connection charset.
@@ -57,9 +58,9 @@ function get_query_result(mysqli $connection, string $sql): mysqli_result
 }
 
 /**
- * Executes a prepared SQL query and returns the result.
+ * Prepares, binds and executes a prepared SQL statement.
  */
-function get_stmt_result(mysqli $connection, string $sql, string $types, array $params): mysqli_result
+function execute_stmt(mysqli $connection, string $sql, string $types = '', array $params = []): mysqli_stmt
 {
     $stmt = mysqli_prepare($connection, $sql);
 
@@ -74,6 +75,16 @@ function get_stmt_result(mysqli $connection, string $sql, string $types, array $
     if (!mysqli_stmt_execute($stmt)) {
         exit('Ошибка выполнения SQL-запроса: ' . mysqli_stmt_error($stmt));
     }
+
+    return $stmt;
+}
+
+/**
+ * Executes a prepared SELECT query and returns the result.
+ */
+function get_stmt_result(mysqli $connection, string $sql, string $types = '', array $params = []): mysqli_result
+{
+    $stmt = execute_stmt($connection, $sql, $types, $params);
 
     $result = mysqli_stmt_get_result($stmt);
 
