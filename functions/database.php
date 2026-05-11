@@ -112,9 +112,7 @@ function get_all_categories(mysqli $connection): array
 
     $result = get_query_result($connection, $sql);
 
-    $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-    return $rows;
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
 /**

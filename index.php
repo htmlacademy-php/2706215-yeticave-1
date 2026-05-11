@@ -5,11 +5,10 @@ declare(strict_types=1);
 require_once __DIR__ . '/init.php';
 
 /** @var mysqli $db_connection */
+/** @var bool   $is_auth */
+/** @var string $user_name */
+/** @var array  $categories */
 
-$is_auth = (bool) rand(0, 1);
-$user_name = 'Александр';
-
-$categories = get_all_categories($db_connection);
 $lots = get_recent_lots($db_connection);
 
 $main_content = include_template('main.php', [

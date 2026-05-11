@@ -5,11 +5,9 @@ declare(strict_types=1);
 require_once __DIR__ . '/init.php';
 
 /** @var mysqli $db_connection */
-
-$is_auth = (bool) rand(0, 1);
-$user_name = 'Александр';
-
-$categories = get_all_categories($db_connection);
+/** @var bool   $is_auth */
+/** @var string $user_name */
+/** @var array  $categories */
 
 $form_data = [];
 $form_errors = [];

@@ -116,14 +116,6 @@ function is_home_page(): bool
 }
 
 /**
- * Returns the home page URL.
- */
-function get_home_url(): string
-{
-    return '/';
-}
-
-/**
  * Redirects to the given URL and stops script execution.
  *
  * @param string $url Redirect URL.
