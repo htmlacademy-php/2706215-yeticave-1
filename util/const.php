@@ -14,4 +14,9 @@ const LIMIT_RECENT_LOTS = 6;
 
 // Uploads
 const MAX_UPLOADED_FILE_SIZE = 2 * 1024 * 1024; // 2MB
-const ALLOWED_IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp'];
+const ALLOWED_IMAGE_TYPES = [
+    'jpg' => 'image/jpeg',
+    'jpeg' => 'image/jpeg',
+    'png' => 'image/png',
+    'webp' => 'image/webp',
+];

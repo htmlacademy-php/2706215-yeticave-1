@@ -38,8 +38,12 @@ function save_uploaded_file(string $input_name): string|false
     }
 
     $extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+    $mime_type = mime_content_type($tmp_name);
 
-    if (!in_array($extension, ALLOWED_IMAGE_EXTENSIONS, true)) {
+    if (
+        !isset(ALLOWED_IMAGE_TYPES[$extension]) ||
+        ALLOWED_IMAGE_TYPES[$extension] !== $mime_type
+    ) {
         return false;
     }
 
