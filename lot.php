@@ -24,10 +24,8 @@ $main_content = include_template('lot.php', [
     'lot' => $lot,
 ]);
 
-$page_title = $lot['title'] ?? '';
-
-$page_content = include_template('layout.php', [
-    'page_title' => $page_title,
+$page_content = include_template('layout/layout.php', [
+    'page_title' => $lot['title'] ?? '',
     'is_auth' => $is_auth,
     'user_name' => $user_name,
     'categories' => $categories,

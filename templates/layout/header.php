@@ -8,7 +8,7 @@
     <div class="main-header__container container">
         <h1 class="visually-hidden">YetiCave</h1>
         <a class="main-header__logo" <?= !is_home_page() ? 'href="' . get_home_url() . '"' : '' ?>>
-            <img src="../img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
+            <img src="/assets/img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
         </a>
         <form class="main-header__search" method="get" action="https://echo.htmlacademy.ru" autocomplete="off">
             <!--suppress HtmlFormInputWithoutLabel -->

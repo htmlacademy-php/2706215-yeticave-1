@@ -81,17 +81,15 @@ $main_content = include_template('add-lot.php', [
     'form_errors' => $form_errors,
 ]);
 
-$page_title = 'Добавление лота';
-
-$page_content = include_template('layout.php', [
-    'page_title' => $page_title,
+$page_content = include_template('layout/layout.php', [
+    'page_title' => 'Добавление лота',
     'is_auth' => $is_auth,
     'user_name' => $user_name,
     'categories' => $categories,
     'main_content' => $main_content,
     'main_class' => '',
-    'css_files' => ['/css/flatpickr.min.css'],
-    'js_files' => ['/js/flatpickr.js', '/js/script.js'],
+    'css_files' => ['/assets/css/flatpickr.min.css'],
+    'js_files' => ['/assets/js/flatpickr.js', '/assets/js/script.js'],
 ]);
 
 echo $page_content;

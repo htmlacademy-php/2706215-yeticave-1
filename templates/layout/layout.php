@@ -17,8 +17,8 @@
     <meta charset="UTF-8">
     <title><?= esc($page_title) ?></title>
     <!-- common styles -->
-    <link href="/css/normalize.min.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="/assets/css/normalize.min.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
     <!-- page styles -->
     <?php if (!empty($css_files)): ?>
         <?= include_css_files($css_files) ?>
@@ -28,7 +28,7 @@
 <body>
     <div class="page-wrapper">
 
-        <?= include_template('header.php', [
+        <?= include_template('layout/header.php', [
             'is_auth' => $is_auth,
             'user_name' => $user_name,
         ]) ?>
@@ -38,7 +38,7 @@
         </main>
     </div>
 
-    <?= include_template('footer.php', [
+    <?= include_template('layout/footer.php', [
         'categories' => $categories,
     ]) ?>
 

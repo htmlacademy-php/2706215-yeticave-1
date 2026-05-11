@@ -17,10 +17,8 @@ $main_content = include_template('main.php', [
     'lots' => $lots,
 ]);
 
-$page_title = 'Главная';
-
-$page_content = include_template('layout.php', [
-    'page_title' => $page_title,
+$page_content = include_template('layout/layout.php', [
+    'page_title' => 'Главная',
     'is_auth' => $is_auth,
     'user_name' => $user_name,
     'categories' => $categories,
