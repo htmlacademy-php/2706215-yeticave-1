@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($form_errors)) {
-        // Temporary assignment
+        // TODO: Replace temporary author ID with current authenticated user ID.
         $author_id = 1;
 
         $data = [
@@ -70,6 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($added_lot_id) {
             redirect('/lot.php?id=' . $added_lot_id);
         }
+
+        // TODO: Add proper error handling if lot creation fails.
     }
 }
 
