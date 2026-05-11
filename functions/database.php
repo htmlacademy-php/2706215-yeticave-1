@@ -190,3 +190,27 @@ function get_lot_by_id(mysqli $connection, int $id): ?array
 
     return mysqli_fetch_assoc($result);
 }
+
+function add_lot(mysqli $connection, array $data): int
+{
+    $sql = <<<SQL
+        INSERT INTO lots (
+            `author_id`,
+            `category_id`,
+            `title`,
+            `description`,
+            `image_url`,
+            `start_price`,
+            `bet_step`,
+            `expire_date`
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    SQL;
+
+    $stmt = execute_stmt($connection, $sql, 'iisssiis', $data);
+
+    if (mysqli_stmt_affected_rows($stmt) !== 1) {
+        exit('Ошибка добавления лота');
+    }
+
+    return mysqli_insert_id($connection);
+}
