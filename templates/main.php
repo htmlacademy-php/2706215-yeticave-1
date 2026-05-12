@@ -8,8 +8,12 @@
     <h2 class="promo__title">Нужен стафф для катки?</h2>
     <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
 
-    <?= include_template('_partials/promo-list.php', [
+    <?= include_template('_partials/category-nav-list.php', [
         'categories' => $categories,
+        'list_class' => 'promo__list',
+        'item_class' => 'promo__item',
+        'link_class' => 'promo__link',
+        'use_slug_modifier' => true,
     ]) ?>
 
 </section>
