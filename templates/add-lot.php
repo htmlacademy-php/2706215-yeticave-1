@@ -8,7 +8,7 @@
 ?>
 <nav class="nav">
 
-    <?= include_template('_partials/_nav_list.php', [
+    <?= include_template('_partials/nav-list.php', [
         'categories' => $categories,
     ]) ?>
 
