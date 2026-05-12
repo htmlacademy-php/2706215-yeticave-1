@@ -7,15 +7,15 @@
 <section class="promo">
     <h2 class="promo__title">Нужен стафф для катки?</h2>
     <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
-    <ul class="promo__list">
 
-        <?php foreach ($categories as $category): ?>
-            <li class="promo__item promo__item--<?= esc($category['slug'] ?? '') ?>">
-                <a class="promo__link" href="pages/all-lots.html"><?= esc($category['name'] ?? '') ?></a>
-            </li>
-        <?php endforeach; ?>
+    <?= include_template('_partials/category-nav-list.php', [
+        'categories' => $categories,
+        'list_class' => 'promo__list',
+        'item_class' => 'promo__item',
+        'link_class' => 'promo__link',
+        'use_slug_modifier' => true,
+    ]) ?>
 
-    </ul>
 </section>
 <section class="lots">
     <div class="lots__header">

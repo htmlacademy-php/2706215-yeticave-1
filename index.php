@@ -16,7 +16,7 @@ $main_content = include_template('main.php', [
     'lots' => $lots,
 ]);
 
-$page_content = include_template('layout/layout.php', [
+$page_content = include_template('layout/main.php', [
     'page_title' => 'Главная',
     'is_auth' => $is_auth,
     'user' => $user,

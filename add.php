@@ -79,7 +79,7 @@ $main_content = include_template('add-lot.php', [
     'form_errors' => $form_errors,
 ]);
 
-$page_content = include_template('layout/layout.php', [
+$page_content = include_template('layout/main.php', [
     'page_title' => 'Добавление лота',
     'is_auth' => $is_auth,
     'user' => $user,
