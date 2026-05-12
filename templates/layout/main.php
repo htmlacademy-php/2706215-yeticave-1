@@ -28,7 +28,7 @@
 <body>
     <div class="page-wrapper">
 
-        <?= include_template('layout/header.php', [
+        <?= include_template('layout/_header.php', [
             'is_auth' => $is_auth,
             'user' => $user,
         ]) ?>
@@ -38,7 +38,7 @@
         </main>
     </div>
 
-    <?= include_template('layout/footer.php', [
+    <?= include_template('layout/_footer.php', [
         'categories' => $categories,
     ]) ?>
 
